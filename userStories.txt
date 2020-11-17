@@ -1,0 +1,27 @@
+user stories:
+
+techonolgies: c#, asp.net, html/css, javascript, api implementation
+
+as a vegetarian/vegan diner I want to sign in and see a landing page that allows users to choose from searching recipes or view available restaurants via a clickable link (asp.net core /C#)
+
+as a vegetarian/vegan diner I want to be able to view a list of local restaurants that cater to vegetarian/vegan dining so diners can view restaurant details and choose a restaurant to dine at. (asp.net core/ C#)
+
+as a vegetarian/vegan diner I want to be able to search for recipes through the yummily api, so that I can find inspiration while cooking at home (yummily api/ c#/Asp.net core)
+
+as a restaurant I want to be able to share a description of my restaurant with the vegetarian/vegan. This will be a details page that consists of restaurant name/ map to location/ menu specials/ photo of restaurant or dish (asp.net/ C#)
+
+as a restaurant I want to be able to populate a photo on my site of either my restaurant or a dish served that will appear on the details page (asp.net core/ c#)
+
+as a restaurant I want to be able to send email updates to vegetarians/vegan diners of the service to share promotions or events coming up (Gmail api or mailkit) 
+
+as a retaurant I wants to provide a map to my restaurant for vegetarian/vegan diners to be able to locate my restaurant (viewable on restaurant details page - Google Maps Api - javascript on view page, c#)
+
+as a restaurant I want to be able to display specials/menu items for diners to look at. (located on restaurant details page using c#/asp.net core)
+
+as a restaurant I want to be able to view details of the diners who signed up for the site in order to help me in making decisions about what promotions to run/ dishes to serve. (shown via an index page using asp.net core/ C#)
+
+as a developer I want to create a user friendly/ visually pleasing user interface for both restaurants and diners (html/css)
+
+Bonus User story:
+
+As a consumer I want to be able to upload a review/rating to a restaurant so other diners can make decisions on where to dine. (C#, asp.net core)
