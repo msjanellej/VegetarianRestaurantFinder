@@ -16,7 +16,7 @@ namespace VeggieRestaurantApp.Models
         public int Age { get; set; }
         public string BirthMonth { get; set; }
         public string AnniversaryMonth { get; set; }
-        public string FavoriteCuisine { get; set; }
+        public string EmailAddress { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

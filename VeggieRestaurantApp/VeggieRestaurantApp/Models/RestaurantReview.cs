@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 
 namespace VeggieRestaurantApp.Models
 {
-    public class EmailAddresses
+    public class RestaurantReview
     {
         [Key]
         public int Id { get; set; }
-        public string EmailAddress { get; set; }
+        public string Review{ get; set; }
+        public int Likes { get; set; }
 
         [ForeignKey("Diner")]
         [Display(Name = "Diner Id Number")]
         public int DinerId { get; set; }
         public Diner diner { get; set; }
+
+        [ForeignKey("Restaurant")]
+        [Display(Name = "Restaurant Id Number")]
+        public int RestaurantId { get; set; }
+        public Restaurant restaurant { get; set; }
     }
 }

@@ -21,10 +21,8 @@ namespace VeggieRestaurantApp.Models
         public string Longitude { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public int Likes { get; set; }
 
-        [ForeignKey("Restaurant")]
-        public string RestaurantId { get; set; }
-        public Restaurant restaurant{ get; set; }
 
 
     }

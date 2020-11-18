@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VeggieRestaurantApp.Data;
 
 namespace VeggieRestaurantApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201118171849_updatedModels")]
+    partial class updatedModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f51d33be-9078-4d4d-a570-8f07f00d4c3d",
-                            ConcurrencyStamp = "d6f4b21e-a08e-4a3e-82c6-ca01213e8e7b",
+                            Id = "53d1b175-62f2-461a-b9b2-df89a50754c3",
+                            ConcurrencyStamp = "793081b1-af0f-4978-a216-c0af9a8672ef",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         },
                         new
                         {
-                            Id = "9380bbc1-46dd-4e1a-8869-a06cd6bff3f9",
-                            ConcurrencyStamp = "4ded8f9c-cab4-452e-be83-a9a497508474",
+                            Id = "0f9a7111-d409-4769-b6c5-04cd00cab8d1",
+                            ConcurrencyStamp = "e7f3a040-5532-4be4-8c86-68d2aad42399",
                             Name = "Diner",
                             NormalizedName = "DINER"
                         });
@@ -260,59 +262,7 @@ namespace VeggieRestaurantApp.Data.Migrations
 
                     b.HasIndex("IdentityUserId");
 
-                    b.ToTable("Diners");
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.Menu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("Menus");
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.Recipe", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DinerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RecipeURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DinerId");
-
-                    b.ToTable("Recipes");
+                    b.ToTable("Diner");
                 });
 
             modelBuilder.Entity("VeggieRestaurantApp.Models.Restaurant", b =>
@@ -354,35 +304,7 @@ namespace VeggieRestaurantApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restaurants");
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.RestaurantReview", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DinerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DinerId");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.ToTable("RestaurantReviews");
+                    b.ToTable("Restaurant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -441,39 +363,6 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.Menu", b =>
-                {
-                    b.HasOne("VeggieRestaurantApp.Models.Restaurant", "restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.Recipe", b =>
-                {
-                    b.HasOne("VeggieRestaurantApp.Models.Diner", "diner")
-                        .WithMany()
-                        .HasForeignKey("DinerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.RestaurantReview", b =>
-                {
-                    b.HasOne("VeggieRestaurantApp.Models.Diner", "diner")
-                        .WithMany()
-                        .HasForeignKey("DinerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VeggieRestaurantApp.Models.Restaurant", "restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

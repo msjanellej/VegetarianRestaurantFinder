@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using VeggieRestaurantApp.Models;
 
 namespace VeggieRestaurantApp.Data
 {
@@ -32,7 +33,13 @@ namespace VeggieRestaurantApp.Data
                 NormalizedName = "DINER"
             }
             );
+  
         }
+        public DbSet<VeggieRestaurantApp.Models.Diner> Diners { get; set; }
+        public DbSet<VeggieRestaurantApp.Models.Restaurant> Restaurants { get; set; }
+        public DbSet<VeggieRestaurantApp.Models.Recipe> Recipes { get; set; }
+        public DbSet<VeggieRestaurantApp.Models.Menu> Menus { get; set; }
+        public DbSet<VeggieRestaurantApp.Models.RestaurantReview> RestaurantReviews { get; set; }
 
     }
 }
