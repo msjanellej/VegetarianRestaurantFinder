@@ -23,7 +23,7 @@ namespace VeggieRestaurantApp.ActionFilters
             {
                 if (_claimsPrincipal.IsInRole("Diner"))
                 {
-                    context.Result = new RedirectToActionResult("Index,", "Diners", null);
+                    context.Result = new RedirectToActionResult("Index", "Diners", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Restaurant"))
                 {

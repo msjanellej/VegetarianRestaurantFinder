@@ -25,32 +25,22 @@ namespace VeggieRestaurantApp.Controllers
         // GET: Diners
         public IActionResult Index()
         {
-            var diners = _context.Diners;
-            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var diner = diners.Where(c => c.IdentityUserId == id).SingleOrDefault();
-
+            var diners = _context.Diners.ToList();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             if (diner == null)
             {
                 return RedirectToAction("Create");
 
             }
-            return View(diner);
+            return View(diners);
         }
 
         // GET: Diners/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var diner = _context.Diners.Where(d => d.Id == id).SingleOrDefault();
-            if (diner == null)
-            {
-                return NotFound();
-            }
-
+            var dinersOnList = _context.Diners.ToList();
+            var diner = _context.Diners.Where(c => c.Id == id).SingleOrDefault();
             return View(diner);
         }
 
@@ -66,16 +56,11 @@ namespace VeggieRestaurantApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Diner diner)
         {
-            var dinersOnList = _context.Diners.ToList();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var veganDiner = _context.Diners.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
-            if (diner == null)
-            {
-                return NotFound();
-            }
-            dinersOnList.Add(veganDiner);
-            return View("Index"); ;
+            diner.IdentityUserId = userId;
+            _context.Add(diner);
+            _context.SaveChanges();
+            return View(diner); 
         }
 
         // GET: Diners/Edit/5
@@ -86,9 +71,7 @@ namespace VeggieRestaurantApp.Controllers
                 return NotFound();
             }
             var dinerssOnList = _context.Diners.ToList();
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var diner = _context.Diners.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
+            var diner = _context.Diners.Where(c => c.Id ==id).SingleOrDefault();
             if (diner == null)
             {
                 return NotFound();
@@ -108,7 +91,7 @@ namespace VeggieRestaurantApp.Controllers
                 _context.Update(diner);
                 _context.SaveChanges();
 
-                return RedirectToAction("Details", "Diners");
+                return RedirectToAction("Details", diner);
             }
             catch
             {
@@ -117,7 +100,7 @@ namespace VeggieRestaurantApp.Controllers
         }
 
         // GET: Diners/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

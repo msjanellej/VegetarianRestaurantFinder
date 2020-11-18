@@ -22,7 +22,9 @@ namespace VeggieRestaurantApp.Models
         public string Description { get; set; }
         public string Image { get; set; }
         public int Likes { get; set; }
-
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
 
 
     }
