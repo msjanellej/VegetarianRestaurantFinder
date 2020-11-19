@@ -5,62 +5,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<body>
+    <div class="jumbotron">
+        <h1 class="display-3">Welcome Fellow Plant Based Foodies</h1>
+        <p class="lead">We simplify the search for plant based dining in your local area. We provide information on restaurants that cater to plant based diners.<br>
+                        No more boring side salads and veggie burgers for you!
+        </p>
+        <hr class="my-4">
+        <p>Please choose below whether you'd rather dine out or cook at home.</p>
+    </div>
+    <div>
+        <h1> Dining In? </h1>
+    </div>
+    <div>
+        
+        <div class="form-group">
+            <label class="col-form-label col-form-label-lg" for="inputLarge">Search for a recipe!</label>
+            <input class="form-control form-control-lg" type="text" placeholder="Search Recipe" id="inputLarge">
+            <button  type="Submit" class="btn btn-primary" id="Search">Search</button>
+        </div>
+    </div>
+    <div id="content">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthMonth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnniversaryMonth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnniversaryMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    </div>
+    <div> <h1>Dining Out?</h1></div>
+</body>
+    
+<script>
+
+    let searchButton = document.getElementById('#Search');
+        searchButton.addEventListener("click", () => {
+            console.log("Button pressed")
+            sendApiRequest()
+        })
+
+
+        async function sendApiRequest() {
+            let APP_ID = "27dc2445"
+            let API_KEY = "eef31258535ef241d8d42137edaceddf"
+            let response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=vegan`);
+            console.log(response)
+            let data = await response.json()
+            console.log(data)
+            useApiData(data)
+        }
+    
+        //function useApiData(data) {
+        //    document.querySelector("#content").innerHTML = 
+        //    <div>
+
+        //        <h3 class="card-header">Card header</h3>
+        //        <div class="card-body">
+        //            <h5 class="card-title">Special title treatment</h5>
+        //            <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+        //        </div>
+        //        <img src="`{data.hits[0].recipe.image}`" class = "card-img-top" alt="Image of Recipe"></img>
+        //        <div class="card-body">
+        //            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        //        </div>
+                
+        //   </div>
+        //}
+
+</script>

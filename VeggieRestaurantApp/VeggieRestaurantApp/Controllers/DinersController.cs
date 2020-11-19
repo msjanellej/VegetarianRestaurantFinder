@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VeggieRestaurantApp.Data;
 using VeggieRestaurantApp.Models;
 
@@ -60,7 +63,7 @@ namespace VeggieRestaurantApp.Controllers
             diner.IdentityUserId = userId;
             _context.Add(diner);
             _context.SaveChanges();
-            return View(diner); 
+            return View(diner);
         }
 
         // GET: Diners/Edit/5
@@ -71,7 +74,7 @@ namespace VeggieRestaurantApp.Controllers
                 return NotFound();
             }
             var dinerssOnList = _context.Diners.ToList();
-            var diner = _context.Diners.Where(c => c.Id ==id).SingleOrDefault();
+            var diner = _context.Diners.Where(c => c.Id == id).SingleOrDefault();
             if (diner == null)
             {
                 return NotFound();
@@ -132,7 +135,12 @@ namespace VeggieRestaurantApp.Controllers
             {
                 return View();
             }
-            
+
+        }
+
+        public async Task<IActionResult> getRecipes()
+        {
+            return null;
         }
 
     }
