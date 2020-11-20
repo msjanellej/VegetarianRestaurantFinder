@@ -52,12 +52,7 @@
         let APP_ID = "27dc2445"
         let API_KEY = "eef31258535ef241d8d42137edaceddf"
         var input = document.getElementById("inputLarge")
-        const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input}&from=0&to=5&health=vegetarian`, {
-            headers: 
-                'no-cors'
-            
-        });
-        
+        const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input.value}&from=0&to=5&health=vegetarian`)
         console.log(response)
         let data = await response.json()
         console.log(data)
@@ -69,11 +64,12 @@
         console.log(data);
         $("#recipeTable").append(
             `<tr>
-                        <td>${data.hits[0].recipe.label}</td>
-                        <td><a href = ${data.hits[0].recipe.url}>${data.hits[0].recipe.url}</a></td>
-                        <td>${data.hits[0].recipe.healthLabels}</td>
-                        <td> <img src= ${data.hits[0].recipe.image} alt=" recipe image" width: "auto" height= "100 px"></td>
+                        <td>${data.hits[].recipe.label}</td>
+                        <td><a href = ${data.hits[].recipe.url}>${data.hits[0].recipe.url}</a></td>
+                        <td>${data.hits[].recipe.healthLabels}</td>
+                        <td> <img src= ${data.hits[].recipe.image} alt=" recipe image" width: "auto" height= "100 px"></td>
             </tr>`
+           
         )
     };
 </script>
