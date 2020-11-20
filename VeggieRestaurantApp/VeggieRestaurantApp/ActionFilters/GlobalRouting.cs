@@ -27,7 +27,7 @@ namespace VeggieRestaurantApp.ActionFilters
                 }
                 else if (_claimsPrincipal.IsInRole("Restaurant"))
                 {
-                    context.Result = new RedirectToActionResult("Index", "Restaurant", null);
+                    context.Result = new RedirectToActionResult("Index", "Restaurants", null);
                 }
             }
         }

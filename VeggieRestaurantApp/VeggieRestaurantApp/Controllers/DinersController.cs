@@ -28,6 +28,7 @@ namespace VeggieRestaurantApp.Controllers
         // GET: Diners
         public IActionResult Index()
         {
+            ViewData["GOOGLE_API_KEY"] = APIKeys.GOOGLE_API_KEY;
             var diners = _context.Diners.ToList();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
@@ -36,7 +37,7 @@ namespace VeggieRestaurantApp.Controllers
                 return RedirectToAction("Create");
 
             }
-            return View(diners);
+            return View();
         }
 
         // GET: Diners/Details/5
