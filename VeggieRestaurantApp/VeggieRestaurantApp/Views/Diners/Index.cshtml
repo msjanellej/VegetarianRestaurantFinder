@@ -5,66 +5,75 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body>
-    <div class="jumbotron">
-        <h1 class="display-3">Welcome Fellow Plant Based Foodies</h1>
-        <p class="lead">We simplify the search for plant based dining in your local area. We provide information on restaurants that cater to plant based diners.<br>
-                        No more boring side salads and veggie burgers for you!
-        </p>
-        <hr class="my-4">
-        <p>Please choose below whether you'd rather dine out or cook at home.</p>
-    </div>
-    <div>
-        <h1> Dining In? </h1>
-    </div>
-    <div>
-        
-        <div class="form-group">
-            <label class="col-form-label col-form-label-lg" for="inputLarge">Search for a recipe!</label>
-            <input class="form-control form-control-lg" type="text" placeholder="Search Recipe" id="inputLarge">
-            <button  type="Submit" class="btn btn-primary" id="Search">Search</button>
-        </div>
-    </div>
-    <div id="content">
 
+<div>
+    <h1 class="display-3">Welcome Plant Based Foodies</h1>
+    <p class="lead">
+        We simplify the search for plant based dining in your local area. We provide information on restaurants that cater to plant based diners.<br>
+        No more boring side salads and veggie burgers for you!
+    </p>
+</div>
+<div>
+    <h1> Dining In? </h1>
+</div>
+<div>
+    <div class="form-group">
+        <label class="col-form-label col-form-label-lg" for="inputLarge">Search for a recipe!</label>
+        <input class="form-control form-control-lg" type="text" placeholder="Search Recipe" id="inputLarge">
+        <button type="Submit" class="btn btn-primary" id="Search">Search</button>
     </div>
-    <div> <h1>Dining Out?</h1></div>
-</body>
-    
+</div>
+<table id="recipeTable" class="table table-hover">
+    <thead>
+        <tr id="recipeTable" class="table-success">
+            <th scope="row">Recipe Name</th>
+            <th scope="row">Recipe URL</th>
+            <th scope="row">Health Labels</th>
+            <th scope="row">Recipe Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-active"></tr>
+        <tr scope="row"> </tr>
+    </tbody>
+</table>
+<div> <h1>Dining Out?</h1></div>
+
+
 <script>
+    let searchButton = document.getElementById('Search');
+    searchButton.addEventListener("click", () => {
+        console.log("Button pressed")
+        
+        sendApiRequest()
+    })
 
-    let searchButton = document.getElementById('#Search');
-        searchButton.addEventListener("click", () => {
-            console.log("Button pressed")
-            sendApiRequest()
-        })
+    async function sendApiRequest() {
+        let APP_ID = "27dc2445"
+        let API_KEY = "eef31258535ef241d8d42137edaceddf"
+        var input = document.getElementById("inputLarge")
+        const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input}&from=0&to=5&health=vegetarian`, {
+            headers: 
+                'no-cors'
+            
+        });
+        
+        console.log(response)
+        let data = await response.json()
+        console.log(data)
+        useApiData(data)
+    }
 
-
-        async function sendApiRequest() {
-            let APP_ID = "27dc2445"
-            let API_KEY = "eef31258535ef241d8d42137edaceddf"
-            let response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=vegan`);
-            console.log(response)
-            let data = await response.json()
-            console.log(data)
-            useApiData(data)
-        }
-    
-        //function useApiData(data) {
-        //    document.querySelector("#content").innerHTML = 
-        //    <div>
-
-        //        <h3 class="card-header">Card header</h3>
-        //        <div class="card-body">
-        //            <h5 class="card-title">Special title treatment</h5>
-        //            <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-        //        </div>
-        //        <img src="`{data.hits[0].recipe.image}`" class = "card-img-top" alt="Image of Recipe"></img>
-        //        <div class="card-body">
-        //            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        //        </div>
-                
-        //   </div>
-        //}
-
+    function useApiData(data) {
+        let content = document.getElementById("content");
+        console.log(data);
+        $("#recipeTable").append(
+            `<tr>
+                        <td>${data.hits[0].recipe.label}</td>
+                        <td><a href = ${data.hits[0].recipe.url}>${data.hits[0].recipe.url}</a></td>
+                        <td>${data.hits[0].recipe.healthLabels}</td>
+                        <td> <img src= ${data.hits[0].recipe.image} alt=" recipe image" width: "auto" height= "100 px"></td>
+            </tr>`
+        )
+    };
 </script>
