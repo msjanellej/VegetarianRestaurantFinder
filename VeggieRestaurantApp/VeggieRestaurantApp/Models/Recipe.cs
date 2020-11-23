@@ -11,8 +11,11 @@ namespace VeggieRestaurantApp.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Name { get; set; }
         public string RecipeURL { get; set; }
+        public string Image { get; set; }
         public int Likes { get; set; }
+        
 
         [ForeignKey("Diner")]
         [Display(Name = "Diner Id Number")]

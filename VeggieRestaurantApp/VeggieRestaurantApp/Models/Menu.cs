@@ -14,7 +14,6 @@ namespace VeggieRestaurantApp.Models
         public string Name { get; set; }
         public string Details { get; set; }
         public double Price { get; set; }
-        public string ImageURL { get; set; }
 
         [ForeignKey("Restaurant")]
         [Display(Name = "Restaurant Id Number")]

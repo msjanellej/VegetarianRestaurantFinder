@@ -37,14 +37,14 @@ namespace VeggieRestaurantApp.Controllers
                 return RedirectToAction("Create");
 
             }
-            return View();
+            return View(diners);
         }
 
         // GET: Diners/Details/5
         public IActionResult Details(int id)
         {
-            var dinersOnList = _context.Diners.ToList();
-            var diner = _context.Diners.Where(c => c.Id == id).SingleOrDefault();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             return View(diner);
         }
 
@@ -102,47 +102,9 @@ namespace VeggieRestaurantApp.Controllers
                 return View();
             }
         }
-
-        // GET: Diners/Delete/5
-        public IActionResult Delete(int? id)
+        public IActionResult RestaurantIndex()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var diner = _context.Diners.Where(d => d.Id == id).SingleOrDefault();
-            if (diner == null)
-            {
-                return NotFound();
-            }
-
-            return View(diner);
+            return View();
         }
-
-        // POST: Diners/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id, Diner diner)
-        {
-            try
-            {
-                _context.Remove(diner);
-                _context.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-
-        }
-
-        public async Task<IActionResult> getRecipes()
-        {
-            return null;
-        }
-
     }
 }

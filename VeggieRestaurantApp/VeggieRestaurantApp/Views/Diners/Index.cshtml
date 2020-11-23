@@ -6,6 +6,9 @@
 }
 
 
+<p>
+    <a asp-action="Details">View Your Account Information</a>
+</p>
 <div>
     <h1 class="display-3">Welcome Plant Based Foodies</h1>
     <p class="lead">
@@ -61,7 +64,6 @@
                     const input = document.getElementById("googleSearch");
                     const autocomplete = new google.maps.places.Autocomplete(input);
                     autocomplete.bindTo("bounds", map);
-                    // Specify just the place data fields that you need.
                     autocomplete.setFields(["place_id", "geometry", "name", "formatted_address"]);
                     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
                     const infowindow = new google.maps.InfoWindow();
@@ -100,8 +102,6 @@
                         });
                     });
                 }
-
-
 
             </script>
             <script defer
