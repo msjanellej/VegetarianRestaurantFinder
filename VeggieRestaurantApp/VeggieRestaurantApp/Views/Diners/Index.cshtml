@@ -38,54 +38,69 @@
     </tbody>
 </table>
 <div> <h1>Dining Out?</h1></div>
+<div class="form-group">
+    <label class="col-form-label col-form-label-lg" for="inputLarge">Search for a Restaurant</label>
+    <input class="form-control form-control-lg" type="text" placeholder="Search Place Name" id="googleSearch">
+    <button type="Submit" class="btn btn-primary" id="googleSearch">Search</button>
+</div>
 <div class="row">
     <div class="col-md-12">
-        <div id="map" style="height:400px; width: 400px;">
-
+        <div id="map" style="height:600px; width: 600px;">
             <script>
-                let map, infoWindow;
+                let googleSearchButton = document.getElementById('googleSearch');
+                googleSearchButton.addEventListener("click", () => {
+                    console.log("button clicked")
+                })
+            </script>
+            <script>
                 function initMap() {
-                    map = new google.maps.Map(document.getElementById("map"), {
+                    const map = new google.maps.Map(document.getElementById("map"), {
                         center: { lat: 43.0579, lng: -87.8991 },
-                        zoom: 15,
+                        zoom: 13,
                     });
-                    infoWindow = new google.maps.InfoWindow();
-                    const locationButton = document.createElement("button");
-                    locationButton.textContent = "Pan to Current Location";
-                    locationButton.classList.add("custom-map-control-button");
-                    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-                    locationButton.addEventListener("click", () => {
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(
-                                (position) => {
-                                    const pos = {
-                                        lat: position.coords.latitude,
-                                        lng: position.coords.longitude,
-                                    };
-                                    infoWindow.setPosition(pos);
-                                    infoWindow.setContent("You Are Here");
-                                    infoWindow.open(map);
-                                    map.setCenter(pos);
-                                },
-                                () => {
-                                    handleLocationError(true, infoWindow, map.getCenter());
-                                }
-                            );
-                        } else {
-                            // Browser doesn't support Geolocation
-                            handleLocationError(false, infoWindow, map.getCenter());
+                    const input = document.getElementById("googleSearch");
+                    const autocomplete = new google.maps.places.Autocomplete(input);
+                    autocomplete.bindTo("bounds", map);
+                    // Specify just the place data fields that you need.
+                    autocomplete.setFields(["place_id", "geometry", "name", "formatted_address"]);
+                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                    const infowindow = new google.maps.InfoWindow();
+                    const infowindowContent = document.getElementById("infowindow-content");
+                    infowindow.setContent(infowindowContent);
+                    const geocoder = new google.maps.Geocoder();
+                    const marker = new google.maps.Marker({ map: map });
+                    marker.addListener("click", () => {
+                        infowindow.open(map, marker);
+                    });
+                    autocomplete.addListener("place_changed", () => {
+                        infowindow.close();
+                        const place = autocomplete.getPlace();
+
+                        if (!place.place_id) {
+                            return;
                         }
+                        geocoder.geocode({ placeId: place.place_id }, (results, status) => {
+                            if (status !== "OK") {
+                                window.alert("Geocoder failed due to: " + status);
+                                return;
+                            }
+                            map.setZoom(11);
+                            map.setCenter(results[0].geometry.location);
+                            // Set the position of the marker using the place ID and location.
+                            marker.setPlace({
+                                placeId: place.place_id,
+                                location: results[0].geometry.location,
+                            });
+                            marker.setVisible(true);
+                            infowindowContent.children["place-name"].textContent = place.name;
+                            infowindowContent.children["place-id"].textContent = place.place_id;
+                            infowindowContent.children["place-address"].textContent =
+                                results[0].formatted_address;
+                            infowindow.open(map, marker);
+                        });
                     });
                 }
-                function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent(
-                        browserHasGeolocation
-                            ? "Error: The Geolocation service failed."
-                            : "Error: Your browser doesn't support geolocation."
-                    );
-                    infoWindow.open(map);
-                }
+
 
 
             </script>
@@ -96,39 +111,39 @@
         </div>
     </div>
     <div class="col-md-12">
-        <h6>Search Out Network of Restaurants</h6>
+        <h6>Search Our Network of Restaurants</h6>
     </div>
 </div>
-    <script>
-        let searchButton = document.getElementById('Search');
-        searchButton.addEventListener("click", () => {
-            sendApiRequest()
-        })
+<script>
+    let searchButton = document.getElementById('Search');
+    searchButton.addEventListener("click", () => {
+        sendApiRequest()
+    })
 
-        async function sendApiRequest() {
-            let APP_ID = "27dc2445"
-            let API_KEY = "eef31258535ef241d8d42137edaceddf"
-            var input = document.getElementById("inputLarge")
-            const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input.value}&from=0&to=5&health=vegetarian`)
-            console.log(response)
-            let data = await response.json()
-            console.log(data)
-            useApiData(data)
-        }
+    async function sendApiRequest() {
+        let APP_ID = "27dc2445"
+        let API_KEY = "eef31258535ef241d8d42137edaceddf"
+        var input = document.getElementById("inputLarge")
+        const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input.value}&from=0&to=5&health=vegetarian`)
+        console.log(response)
+        let data = await response.json()
+        console.log(data)
+        useApiData(data)
+    }
 
-        function useApiData(data) {
-            let content = document.getElementById("content");
-            console.log(data);
-            $("#recipeTable").append(
-                `<tr>
+    function useApiData(data) {
+        let content = document.getElementById("content");
+        console.log(data);
+        $("#recipeTable").append(
+            `<tr>
                             <td>${data.hits[0].recipe.label}</td>
                             <td><a href = ${data.hits[0].recipe.url}>${data.hits[0].recipe.url}</a></td>
                             <td>${data.hits[0].recipe.healthLabels}</td>
                             <td> <img src= ${data.hits[0].recipe.image} alt=" recipe image" width: "auto" height= "100 px"></td>
                 </tr>`
 
-            )
-        };
-    </script>
+        )
+    };
+</script>
 
 
