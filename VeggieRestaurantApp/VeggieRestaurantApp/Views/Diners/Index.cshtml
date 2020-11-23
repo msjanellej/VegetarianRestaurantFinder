@@ -38,14 +38,14 @@
     </tbody>
 </table>
 <div> <h1>Dining Out?</h1></div>
-<div class="form-group">
-    <label class="col-form-label col-form-label-lg" for="inputLarge">Search for a Restaurant</label>
-    <input class="form-control form-control-lg" type="text" placeholder="Search Place Name" id="googleSearch">
-    <button type="Submit" class="btn btn-primary" id="googleSearch">Search</button>
-</div>
+
+    <div class="form-group">
+        <input class="form-control form-control-sm" type="text" placeholder="Search For A Restaurant" id="googleSearch">
+    </div>
+
 <div class="row">
-    <div class="col-md-12">
-        <div id="map" style="height:600px; width: 600px;">
+    <div class="col-md-6">
+        <div id="map" style="height:500px; width: 500px;">
             <script>
                 let googleSearchButton = document.getElementById('googleSearch');
                 googleSearchButton.addEventListener("click", () => {
@@ -110,7 +110,7 @@
 
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-4">
         <h6>Search Our Network of Restaurants</h6>
     </div>
 </div>
