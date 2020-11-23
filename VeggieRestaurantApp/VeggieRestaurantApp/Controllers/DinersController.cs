@@ -126,6 +126,11 @@ namespace VeggieRestaurantApp.Controllers
             _context.SaveChanges();
             return View("RecipeDetails", recipeToLike);
         }
+        public IActionResult RestaurantDetails(int id)
+        {
+            var restaurant = _context.Restaurants.Where(r => r.Id == id).SingleOrDefault();
+            return View(restaurant);
+        }
 
     }
 }
