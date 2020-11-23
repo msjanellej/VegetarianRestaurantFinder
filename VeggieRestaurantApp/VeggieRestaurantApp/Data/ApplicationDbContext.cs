@@ -43,11 +43,11 @@ namespace VeggieRestaurantApp.Data
             base.OnModelCreating(builder);
             builder.Entity<Recipe>()
               .HasData(
-                 new Recipe { Id = 1, Name = "Vegetarian Tacos", RecipeURL = "http://https://www.loveandlemons.com/vegetarian-tacos/", Image= "https://cdn.loveandlemons.com/wp-content/uploads/2015/09/vegetarian-tacos.jpg", Likes = 7 },
-                    new Recipe { Id = 2, Name = "Homeade Vegetarian Chili", RecipeURL = "https://cookieandkate.com/vegetarian-chili-recipe/", Image= "https://cookieandkate.com/images/2015/11/vegetarian-chili-recipe-6-768x1154.jpg", Likes = 15 },
-                    new Recipe { Id = 3, Name = "Fresh & Easy Veggie Spaghetti", RecipeURL = "https://www.inspiredtaste.net/38662/veggie-spaghetti-recipe/", Image= "https://www.inspiredtaste.net/wp-content/uploads/2019/02/Vegetable-Spaghetti-Recipe-1200.jpg", Likes = 10 },
-                    new Recipe { Id = 4, Name = "My Favorite Vegan Pizza", RecipeURL = "https://minimalistbaker.com/my-favorite-vegan-pizza/", Image= "https://minimalistbaker.com/wp-content/uploads/2014/06/THEE-BEST-Vegan-Pizza-Sauteed-veggies-simple-tomato-sauce-loads-of-vegan-parmesan-cheese.-Pizza-perfection-vegan-pizza.jpg", Likes = 5 },
-                    new Recipe { Id = 5, Name = "The Best Damn Vegan Mashed Potatoes", RecipeURL = "https://minimalistbaker.com/the-best-damn-vegan-mashed-potatoes/", Image= "https://minimalistbaker.com/wp-content/uploads/2014/02/The-Best-Damn-Vegan-Mashed-Potatoes-So-simple-fast-SUPER-FLUFFY-and-delicious.jpg", Likes = 2 });
+                 new Recipe { Id = 1, Name = "Vegetarian Tacos", RecipeURL = "http://https://www.loveandlemons.com/vegetarian-tacos/", Image= "https://cdn.loveandlemons.com/wp-content/uploads/2015/09/vegetarian-tacos.jpg", Likes = 7, DinerId = 25 },
+                    new Recipe { Id = 2, Name = "Homeade Vegetarian Chili", RecipeURL = "https://cookieandkate.com/vegetarian-chili-recipe/", Image= "https://cookieandkate.com/images/2015/11/vegetarian-chili-recipe-6-768x1154.jpg", Likes = 15, DinerId = 25 },
+                    new Recipe { Id = 3, Name = "Fresh & Easy Veggie Spaghetti", RecipeURL = "https://www.inspiredtaste.net/38662/veggie-spaghetti-recipe/", Image= "https://www.inspiredtaste.net/wp-content/uploads/2019/02/Vegetable-Spaghetti-Recipe-1200.jpg", Likes = 10, DinerId = 25 },
+                    new Recipe { Id = 4, Name = "My Favorite Vegan Pizza", RecipeURL = "https://minimalistbaker.com/my-favorite-vegan-pizza/", Image= "https://minimalistbaker.com/wp-content/uploads/2014/06/THEE-BEST-Vegan-Pizza-Sauteed-veggies-simple-tomato-sauce-loads-of-vegan-parmesan-cheese.-Pizza-perfection-vegan-pizza.jpg", Likes = 5, DinerId = 25 },
+                    new Recipe { Id = 5, Name = "The Best Damn Vegan Mashed Potatoes", RecipeURL = "https://minimalistbaker.com/the-best-damn-vegan-mashed-potatoes/", Image= "https://minimalistbaker.com/wp-content/uploads/2014/02/The-Best-Damn-Vegan-Mashed-Potatoes-So-simple-fast-SUPER-FLUFFY-and-delicious.jpg", Likes = 2, DinerId = 25 });
             base.OnModelCreating(builder);
             builder.Entity<Menu>()
               .HasData(
@@ -56,6 +56,11 @@ namespace VeggieRestaurantApp.Data
                     new Menu { Id = 3, Name = "This Week's Special", Details = "BBQ Soy Curls, Jalapenos & Cornbread Crutons with Scallion", Price = 12.00, RestaurantId = 4},
                     new Menu { Id = 4, Name = "Original Bus Burger", Details = "#1 Favorite Patty, Cheddar Cheese, Pickles, Crispy Onions, Tomatoes, Spring Mix, Housemade Bus Russian Sauce", Price = 9.95, RestaurantId = 3},
                     new Menu { Id = 5, Name = "Breakfast Bagel Sandwich", Details = "Tofu eggless patty, housemade hollandaise & Tempeh bacun served grilled on a bagel", Price = 6.95, RestaurantId = 3});
+            base.OnModelCreating(builder);
+            builder.Entity<Diner>()
+              .HasData(
+                 new Diner { Id = 25, Name = "Monkey D. Luffy", Age = 19, BirthMonth = "March", AnniversaryMonth = "October", EmailAddress = "luffy@strawhats.com" });
+                   
 
 
         }

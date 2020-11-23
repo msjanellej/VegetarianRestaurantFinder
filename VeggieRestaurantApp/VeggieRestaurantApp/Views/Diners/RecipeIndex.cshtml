@@ -1,0 +1,55 @@
+﻿@model IEnumerable<VeggieRestaurantApp.Models.Recipe>
+
+@{
+    ViewData["Title"] = "RecipeIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Our Favorite Recipes</h1>
+
+<p>
+    <a asp-action="Create">Add A Recipe!</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipeURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a href ='@Html.DisplayFor(modelItem => item.RecipeURL)'>Click Here for Recipe</a>
+            </td>
+            <td>
+                <img src='@Html.DisplayFor(modelItem => item.Image)' alt="Recipe Image" width="auto" height="200">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Likes)
+            </td>
+            
+            <td>
+                <a asp-action="RecipeDetails" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="LikeRecipe" asp-route-id="@item.Id">Add A Like</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

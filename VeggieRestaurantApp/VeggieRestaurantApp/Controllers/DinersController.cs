@@ -104,7 +104,28 @@ namespace VeggieRestaurantApp.Controllers
         }
         public IActionResult RestaurantIndex()
         {
-            return View();
+            var restaurants = _context.Restaurants.ToList();
+            return View(restaurants);
         }
+        public IActionResult RecipeIndex()
+        {
+            var recipes = _context.Recipes.ToList();
+            var recipeList = recipes.OrderByDescending(r => r.Likes);
+            return View(recipeList);
+        }
+        public IActionResult RecipeDetails(int id)
+        {
+            var recipe = _context.Recipes.Where(c => c.Id == id).SingleOrDefault();
+            return View(recipe);
+        }
+
+        public IActionResult LikeRecipe(int id, Recipe recipe)
+        {
+            var recipeToLike = _context.Recipes.Single(r => r.Id == recipe.Id);
+            recipeToLike.Likes += 1;
+            _context.SaveChanges();
+            return View("RecipeDetails", recipeToLike);
+        }
+
     }
 }
