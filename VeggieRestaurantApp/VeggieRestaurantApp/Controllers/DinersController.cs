@@ -139,19 +139,26 @@ namespace VeggieRestaurantApp.Controllers
             _context.SaveChanges();
             return View("RestaurantDetails", restaurantToLike);
         }
-        public IActionResult CreateReview()
+        public IActionResult ViewMyLikedRecipes(Diner diner)
         {
-            return View();
-        }
+            var recipes = _context.Recipes.ToList();
+            var recipeList = recipes.Where(r => r.DinerId == diner.Id);
+            return View(recipeList);
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateReview(RestaurantReview review)
-        {
-
-            _context.Add(review);
-            _context.SaveChanges();
-            return View(review);
         }
+        //public IActionResult CreateReview()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult CreateReview(RestaurantReview review)
+        //{
+
+        //    _context.Add(review);
+        //    _context.SaveChanges();
+        //    return View(review);
+        //}
     }
 }
