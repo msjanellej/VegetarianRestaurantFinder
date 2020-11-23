@@ -105,6 +105,7 @@ namespace VeggieRestaurantApp.Controllers
         public IActionResult RestaurantIndex()
         {
             var restaurants = _context.Restaurants.ToList();
+            var restaurantList = restaurants.OrderByDescending(r => r.Likes);
             return View(restaurants);
         }
         public IActionResult RecipeIndex()
@@ -131,6 +132,26 @@ namespace VeggieRestaurantApp.Controllers
             var restaurant = _context.Restaurants.Where(r => r.Id == id).SingleOrDefault();
             return View(restaurant);
         }
+        public IActionResult LikeRestaurant(int id, Restaurant restaurant)
+        {
+            var restaurantToLike = _context.Recipes.Single(r => r.Id == restaurant.Id);
+            restaurantToLike.Likes += 1;
+            _context.SaveChanges();
+            return View("RestaurantDetails", restaurantToLike);
+        }
+        public IActionResult CreateReview()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateReview(RestaurantReview review)
+        {
+
+            _context.Add(review);
+            _context.SaveChanges();
+            return View(review);
+        }
     }
 }

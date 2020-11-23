@@ -78,9 +78,10 @@
                 @Html.DisplayFor(modelItem => item.Likes)
             </td>
             <td>
-                
-                <a asp-action="RestaurantDetails" asp-route-id="@item.Id">Details</a>
-                
+
+                <a asp-action="RestaurantDetails" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="LikeRestaurant" asp-route-id="@item.Id">Add A Like</a>
+
             </td>
         </tr>
 }
