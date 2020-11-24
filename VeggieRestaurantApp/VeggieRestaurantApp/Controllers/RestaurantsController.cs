@@ -103,10 +103,11 @@ namespace VeggieRestaurantApp.Controllers
         // GET: RestaurantsController/Create
         public ActionResult CreateSpecials()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            Menu menu = new Menu();
-            return View(menu);
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            //Menu menu = new Menu();
+            //menu.RestaurantId = restaurant.Id;
+            return View();
         }
 
         // POST: RestaurantsController/Create
@@ -114,14 +115,22 @@ namespace VeggieRestaurantApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSpecials(Menu menu)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            menu.RestaurantId = restaurant.Id;
+
             _context.Add(menu);
             _context.SaveChanges();
             return View("SpecialsIndex");
         }
-        public IActionResult ReviewerIndex()
-        {
-            return null;
-        }
+        //public IActionResult ReviewerIndex()
+        //{
+        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+        //    var reviews = _context.RestaurantReviews.Where(r => r.RestaurantId == restaurant.Id);
+        //    var diners = reviews.Where
+        //    return null;
+        //}
 
 
     }
