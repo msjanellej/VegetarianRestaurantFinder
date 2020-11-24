@@ -14,8 +14,11 @@ namespace VeggieRestaurantApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
+        [Display(Name = "Birth Month")]
         public string BirthMonth { get; set; }
+        [Display(Name = "Anniversary Month")]
         public string AnniversaryMonth { get; set; }
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         [ForeignKey("IdentityUser")]

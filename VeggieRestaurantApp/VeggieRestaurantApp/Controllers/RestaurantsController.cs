@@ -82,7 +82,47 @@ namespace VeggieRestaurantApp.Controllers
                 return View();
             }
         }
+        public IActionResult SpecialsIndex(int id)
+        {
+            var specials = _context.RestaurantReviews.Where(r => r.RestaurantId == id).ToList();
+            return View(specials);
+        }
+        public IActionResult EditSpecials(int id)
+        {
+            //var specials = _context.Menus.ToList();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var mySpecials = _context.Menus.Where(r => r.RestaurantId == restaurant.Id).ToList();
+            var specialItem = _context.Menus.Where(c => c.Id == id).SingleOrDefault();
+            if (specialItem == null)
+            {
+                return NotFound();
+            }
+            return View(specialItem);
+        }
+        // GET: RestaurantsController/Create
+        public ActionResult CreateSpecials()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            Menu menu = new Menu();
+            return View(menu);
+        }
 
-      
+        // POST: RestaurantsController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSpecials(Menu menu)
+        {
+            _context.Add(menu);
+            _context.SaveChanges();
+            return View("SpecialsIndex");
+        }
+        public IActionResult ReviewerIndex()
+        {
+            return null;
+        }
+
+
     }
 }

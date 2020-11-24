@@ -13,11 +13,14 @@ namespace VeggieRestaurantApp.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
+        [Display(Name = "Zip Code")]
         public int ZipCode { get; set; }
         public  string Website { get; set; }
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }

@@ -45,7 +45,7 @@
             @Html.DisplayNameFor(model => model.Website)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Website)
+            <a href='@Html.DisplayFor(modelItem => Model.Website)'>Website</a>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PhoneNumber)
@@ -63,7 +63,7 @@
             @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
+            <img src="@Html.DisplayFor(modelItem => Model.Image)" alt="Restaurant Image" width="auto" height="200">
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Likes)
@@ -75,6 +75,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit Restaurant Details</a> |
+    <a asp-action="SpecialsIndex" asp-route-id="@Model.Id">View My Specials</a> |
+    <a asp-action="CreateSpecials" asp-route-id="@Model.Id">Add A New Special or Menu Item</a> |
+
 </div>
