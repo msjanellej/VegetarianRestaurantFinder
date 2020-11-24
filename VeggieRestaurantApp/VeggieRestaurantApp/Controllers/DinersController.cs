@@ -185,7 +185,7 @@ namespace VeggieRestaurantApp.Controllers
             newReview.Review = restaurantReview.RestaurantReviewVM.Review;
             _context.Add(newReview);
             _context.SaveChanges();
-            return View(newReview);
+            return View("RestaurantIndex");
         }
     }
 }

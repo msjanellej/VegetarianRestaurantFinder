@@ -17,8 +17,8 @@
             <input type="hidden" asp-for="RestaurantVM.Id" />
             <div class="form-group">
                 @*<label asp-for="RestaurantReviewVM" class="control-label"></label>*@
-                <input asp-for="RestaurantReviewVM" class="form-control" />
-                <span asp-validation-for="RestaurantReviewVM" class="text-danger"></span>
+                <input asp-for="RestaurantReviewVM.Review" class="form-control" />
+                <span asp-validation-for="RestaurantReviewVM.Review" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

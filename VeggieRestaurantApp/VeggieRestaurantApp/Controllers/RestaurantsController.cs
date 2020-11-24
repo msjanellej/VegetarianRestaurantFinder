@@ -29,17 +29,8 @@ namespace VeggieRestaurantApp.Controllers
             {
                 return RedirectToAction("Create");
             }
-            return View(restaurants);
-        }
-
-        // GET: RestaurantsController/Details/5
-        public ActionResult Details(int id)
-        {
-            var restaurantsOnList = _context.Restaurants.ToList();
-            var restaurant = _context.Restaurants.Where(c => c.Id == id).SingleOrDefault();
             return View(restaurant);
         }
-
         // GET: RestaurantsController/Create
         public ActionResult Create()
         {
@@ -55,7 +46,7 @@ namespace VeggieRestaurantApp.Controllers
             restaurant.IdentityUserId = userId;
             _context.Add(restaurant);
             _context.SaveChanges();
-            return View(restaurant);
+            return View("Index");
         }
 
         // GET: RestaurantsController/Edit/5
@@ -84,7 +75,7 @@ namespace VeggieRestaurantApp.Controllers
                 _context.Update(restaurant);
                 _context.SaveChanges();
 
-                return RedirectToAction("Details", restaurant);
+                return RedirectToAction("Index", restaurant);
             }
             catch
             {
