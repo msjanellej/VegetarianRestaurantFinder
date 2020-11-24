@@ -80,7 +80,10 @@
             <td>
 
                 <a asp-action="RestaurantDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="LikeRestaurant" asp-route-id="@item.Id">Add A Like</a>
+                <a asp-action="ReviewIndex" asp-route-id="@item.Id">Reviews</a> |
+                <a asp-action="LikeRestaurant" asp-route-id="@item.Id">Add A Like</a> |
+                <a asp-action="CreateReview" asp-route-id="@item.Id">Add A Review</a>
+
 
             </td>
         </tr>

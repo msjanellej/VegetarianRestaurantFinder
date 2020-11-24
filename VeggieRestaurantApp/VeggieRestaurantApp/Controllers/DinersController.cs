@@ -106,7 +106,7 @@ namespace VeggieRestaurantApp.Controllers
         {
             var restaurants = _context.Restaurants.ToList();
             var restaurantList = restaurants.OrderByDescending(r => r.Likes);
-            return View(restaurants);
+            return View(restaurantList);
         }
         public IActionResult RecipeIndex()
         {
@@ -146,19 +146,46 @@ namespace VeggieRestaurantApp.Controllers
             return View(recipeList);
 
         }
-        //public IActionResult CreateReview()
-        //{
-        //    return View();
-        //}
+        public IActionResult ReviewIndex(Restaurant restaurant)
+        {
+            var reviews = _context.RestaurantReviews.Where(r => r.RestaurantId == restaurant.Id).ToList();
+            return View(reviews);
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult CreateReview(RestaurantReview review)
-        //{
+        public IActionResult CreateReview(int id)
+        {
 
-        //    _context.Add(review);
-        //    _context.SaveChanges();
-        //    return View(review);
-        //}
+            // Create view that accepts view model (just one instance)
+            // instantiate viewmodel
+            // run queries for all properties that are models
+            // set viewmodel instance properties equal to query results
+            // pass the viewmodel into the view
+            RestaurantDinerRestaurantReviewVM newReview = new RestaurantDinerRestaurantReviewVM();
+            var restaurant = _context.Restaurants.Where(r => r.Id == id).SingleOrDefault();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            //var review = "";
+            //newReview.RestaurantReviewVM.Review = review;
+            newReview.RestaurantVM = restaurant;
+            newReview.DinerVM = diner;
+            return View(newReview);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateReview(RestaurantDinerRestaurantReviewVM restaurantReview)
+        {
+            // accept the viewmodel as a parameter
+            // run all the Add and SaveChanges logic
+            // create new instance of RestaurantReview - then set viewmodel properties = to RestaurantReview properties
+
+            RestaurantReview newReview = new RestaurantReview();
+            newReview.RestaurantId = restaurantReview.RestaurantVM.Id;
+            newReview.DinerId = restaurantReview.DinerVM.Id;
+            newReview.Review = restaurantReview.RestaurantReviewVM.Review;
+            _context.Add(newReview);
+            _context.SaveChanges();
+            return View(newReview);
+        }
     }
 }
