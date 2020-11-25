@@ -177,5 +177,10 @@ namespace VeggieRestaurantApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("RestaurantIndex");
         }
+        public IActionResult SpecialsIndex(int id)
+        {
+            var specials = _context.Menus.Where(r => r.RestaurantId == id).ToList();
+            return View(specials);
+        }
     }
 }
