@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VeggieRestaurantApp.Models.Diner>
+﻿@model IEnumerable<VeggieRestaurantApp.Models.Restaurant>
 
 @{
     ViewData["Title"] = "Index";
@@ -49,112 +49,108 @@
     </div>
 </div>
 
-    <div> <h1>Dining Out?</h1></div>
+<div> <h1>Dining Out?</h1></div>
 
-    <div class="form-group">
-        <input class="form-control form-control-sm" type="text" placeholder="Search For A Restaurant" id="googleSearch">
-    </div>
+<div class="form-group">
+    <input class="form-control form-control-sm" type="text" placeholder="Search For A Restaurant" id="googleSearch">
+</div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div id="map" style="height:500px; width: 500px;">
-                <script>
-                    let googleSearchButton = document.getElementById('googleSearch');
-                    googleSearchButton.addEventListener("click", () => {
-                        console.log("button clicked")
-                    })
-                </script>
-                <script>
-                    function initMap() {
-                        const map = new google.maps.Map(document.getElementById("map"), {
-                            center: { lat: 43.0579, lng: -87.8991 },
-                            zoom: 13,
-                        });
-                        const input = document.getElementById("googleSearch");
-                        const autocomplete = new google.maps.places.Autocomplete(input);
-                        autocomplete.bindTo("bounds", map);
-                        autocomplete.setFields(["place_id", "geometry", "name", "formatted_address"]);
-                        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-                        const infowindow = new google.maps.InfoWindow();
-                        const infowindowContent = document.getElementById("infowindow-content");
-                        infowindow.setContent(infowindowContent);
-                        const geocoder = new google.maps.Geocoder();
-                        const marker = new google.maps.Marker({ map: map });
-                        marker.addListener("click", () => {
-                            infowindow.open(map, marker);
-                        });
-                        autocomplete.addListener("place_changed", () => {
-                            infowindow.close();
-                            const place = autocomplete.getPlace();
-
-                            if (!place.place_id) {
+<div class="row">
+    <div class="col-md-6">
+        <div id="map" style="height:500px; width: 500px;">
+            <script>
+                let googleSearchButton = document.getElementById('googleSearch');
+                googleSearchButton.addEventListener("click", () => {
+                })
+            </script>
+            <script>
+                function initMap() {
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: 43.0579, lng: -87.8991 },
+                        zoom: 13,
+                    });
+                    const input = document.getElementById("googleSearch");
+                    const autocomplete = new google.maps.places.Autocomplete(input);
+                    autocomplete.bindTo("bounds", map);
+                    autocomplete.setFields(["place_id", "geometry", "name", "formatted_address"]);
+                    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                    const infowindow = new google.maps.InfoWindow();
+                    const infowindowContent = document.getElementById("infowindow-content");
+                    infowindow.setContent(infowindowContent);
+                    const geocoder = new google.maps.Geocoder();
+                    const marker = new google.maps.Marker({ map: map });
+                    marker.addListener("click", () => {
+                        infowindow.open(map, marker);
+                    });
+                    autocomplete.addListener("place_changed", () => {
+                        infowindow.close();
+                        const place = autocomplete.getPlace();
+                        if (!place.place_id) {
+                            return;
+                        }
+                        geocoder.geocode({ placeId: place.place_id }, (results, status) => {
+                            if (status !== "OK") {
+                                window.alert("Geocoder failed due to: " + status);
                                 return;
                             }
-                            geocoder.geocode({ placeId: place.place_id }, (results, status) => {
-                                if (status !== "OK") {
-                                    window.alert("Geocoder failed due to: " + status);
-                                    return;
-                                }
-                                map.setZoom(11);
-                                map.setCenter(results[0].geometry.location);
-                                // Set the position of the marker using the place ID and location.
-                                marker.setPlace({
-                                    placeId: place.place_id,
-                                    location: results[0].geometry.location,
-                                });
-                                marker.setVisible(true);
-                                infowindowContent.children["place-name"].textContent = place.name;
-                                infowindowContent.children["place-id"].textContent = place.place_id;
-                                infowindowContent.children["place-address"].textContent =
-                                    results[0].formatted_address;
-                                infowindow.open(map, marker);
+                            map.setZoom(11);
+                            map.setCenter(results[0].geometry.location);
+                            marker.setPlace({
+                                placeId: place.place_id,
+                                location: results[0].geometry.location,
                             });
+                            marker.setVisible(true);
+                            infowindowContent.children["place-name"].textContent = place.name;
+                            infowindowContent.children["place-id"].textContent = place.place_id;
+                            infowindowContent.children["place-address"].textContent =
+                                results[0].formatted_address;
+                            infowindow.open(map, marker);
                         });
-                    }
+                    });
+                }
+            </script>
+            <script defer
+                    src="https://maps.googleapis.com/maps/api/js?key=@ViewData["GOOGLE_API_KEY"]&libraries=places&callback=initMap">
+            </script>
 
-                </script>
-                <script defer
-                        src="https://maps.googleapis.com/maps/api/js?key=@ViewData["GOOGLE_API_KEY"]&libraries=places&callback=initMap">
-                </script>
-
-            </div>
-        </div>
-        <div class="col-md-4">
-            <h6>
-                <a asp-action="RestaurantIndex">Search Our Network of Restaurants</a>
-            </h6>
         </div>
     </div>
-    <script>
-        let searchButton = document.getElementById('Search');
-        searchButton.addEventListener("click", () => {
-            sendApiRequest()
-        })
+    <div class="col-md-4">
+        <h6>
+            <a asp-action="RestaurantIndex">Search Our Network of Restaurants</a>
+        </h6>
+    </div>
+</div>
+<script>
+    let searchButton = document.getElementById('Search');
+    searchButton.addEventListener("click", () => {
+        sendApiRequest()
+    })
 
-        async function sendApiRequest() {
-            let APP_ID = "27dc2445"
-            let API_KEY = "eef31258535ef241d8d42137edaceddf"
-            var input = document.getElementById("inputLarge")
-            const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input.value}&from=0&to=5&health=vegetarian`)
-            console.log(response)
-            let data = await response.json()
-            console.log(data)
-            useApiData(data)
-        }
+    async function sendApiRequest() {
+        let APP_ID = "27dc2445"
+        let API_KEY = "eef31258535ef241d8d42137edaceddf"
+        var input = document.getElementById("inputLarge")
+        const response = await fetch(`https://api.edamam.com/search?app_id=${APP_ID}&app_key=${API_KEY}&q=${input.value}&from=0&to=5&health=vegetarian`)
+        console.log(response)
+        let data = await response.json()
+        console.log(data)
+        useApiData(data)
+    }
 
-        function useApiData(data) {
-            let content = document.getElementById("content");
-            console.log(data);
-            $("#recipeTable").append(
-                `<tr>
+    function useApiData(data) {
+        let content = document.getElementById("content");
+        console.log(data);
+        $("#recipeTable").append(
+            `<tr>
                                 <td>${data.hits[0].recipe.label}</td>
                                 <td><a href = ${data.hits[0].recipe.url}>${data.hits[0].recipe.url}</a></td>
                                 <td>${data.hits[0].recipe.healthLabels}</td>
                                 <td> <img src= ${data.hits[0].recipe.image} alt=" recipe image" width: "auto" height= "100 px"></td>
-                    </tr>`
+            </tr>`
 
-            )
-        };
-    </script>
+        )
+    };
+</script>
 
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VeggieRestaurantApp.Data;
 using VeggieRestaurantApp.Models;
 
@@ -44,6 +45,7 @@ namespace VeggieRestaurantApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Restaurant restaurant)
         {
+            var coordinates = GetCoordinates(restaurant);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             restaurant.IdentityUserId = userId;
             _context.Add(restaurant);
@@ -160,25 +162,25 @@ namespace VeggieRestaurantApp.Controllers
             var reviewer = _context.Diners.Where(d => d.Id == review.DinerId).SingleOrDefault();
             return View(reviewer);
         }
-        //static async Task<Restaurant> GetCoordinates(Restaurant restaurant)
-        //{
-        //    HttpClient httpClient = new HttpClient();
-        //    var URL = $"https://maps.googleapis.com/maps/api/geocode/json?address={customer.StreetAddress}+{customer.City}+{customer.State}&key={APIkeys.GOOGLE_API_KEY}";
-        //    HttpResponseMessage response = await httpClient.GetAsync(URL);
-        //    response.EnsureSuccessStatusCode();
-        //    string responseBody = await response.Content.ReadAsStringAsync();
-        //    Newtonsoft.Json.Linq.JObject result = JsonConvert.DeserializeObject<JObject>(responseBody);
-        //    var partOfObject = result["results"];
-        //    var secondPartOfObject = partOfObject[0];
-        //    var thirdPartOfObject = secondPartOfObject["geometry"];
-        //    var fourthPartOfObject = thirdPartOfObject["location"];
-        //    var latitude = fourthPartOfObject["lat"].ToString();
-        //    var longitude = fourthPartOfObject["lng"].ToString();
-        //    restaurant.latitude = double.Parse(latitude);
-        //    restaurant.longitude = double.Parse(longitude);
-        //    return customer;
+        static async Task<Restaurant> GetCoordinates(Restaurant restaurant)
+        {
+            HttpClient httpClient = new HttpClient();
+            var URL = $"https://maps.googleapis.com/maps/api/geocode/json?address={restaurant.StreetAddress}+{restaurant.City}+{restaurant.State}&key={APIKeys.GOOGLE_API_KEY}";
+            HttpResponseMessage response = await httpClient.GetAsync(URL);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Newtonsoft.Json.Linq.JObject result = JsonConvert.DeserializeObject<JObject>(responseBody);
+            var partOfObject = result["results"];
+            var secondPartOfObject = partOfObject[0];
+            var thirdPartOfObject = secondPartOfObject["geometry"];
+            var fourthPartOfObject = thirdPartOfObject["location"];
+            var latitude = fourthPartOfObject["lat"].ToString();
+            var longitude = fourthPartOfObject["lng"].ToString();
+            restaurant.latitude = double.Parse(latitude);
+            restaurant.longitude = double.Parse(longitude);
+            return restaurant;
 
-        //}
+        }
 
 
     }
