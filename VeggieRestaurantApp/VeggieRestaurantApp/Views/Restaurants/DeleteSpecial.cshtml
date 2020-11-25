@@ -1,0 +1,46 @@
+﻿@model VeggieRestaurantApp.Models.Menu
+
+@{
+    ViewData["Title"] = "DeleteSpecial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete Special/Menu Item</h1>
+
+
+<div>
+    <h4>Are you sure you want to delete this?</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.restaurant)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.restaurant.Id)
+        </dd class>
+    </dl>
+    
+    <form asp-action="DeleteSpecial">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> <br>
+        <a asp-action="SpecialsIndex">Back to Your Menu/Specials</a>
+    </form>
+</div>
