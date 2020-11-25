@@ -144,14 +144,20 @@ namespace VeggieRestaurantApp.Controllers
             return RedirectToAction("SpecialsIndex");
         }
 
-        //public IActionResult ReviewerIndex()
-        //{
-        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-        //    var reviews = _context.RestaurantReviews.Where(r => r.RestaurantId == restaurant.Id);
-        //    var diners = reviews.Where
-        //    return null;
-        //}
+        public IActionResult ReviewsIndex()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var reviews = _context.RestaurantReviews.Where(r => r.RestaurantId == restaurant.Id).ToList();
+            
+            return View(reviews);
+        }
+        public IActionResult ReviewerDetails(int id)
+        {
+            var review = _context.RestaurantReviews.Where(r => r.Id == id).SingleOrDefault();
+            var reviewer = _context.Diners.Where(d => d.Id == review.DinerId).SingleOrDefault();
+            return View(reviewer);
+        }
 
 
     }

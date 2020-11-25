@@ -1,0 +1,50 @@
+﻿@model IEnumerable<VeggieRestaurantApp.Models.RestaurantReview>
+
+@{
+    ViewData["Title"] = "ReviewsIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ReviewsIndex</h1>
+
+<p><a asp-action="Index">>Back To Account Details</a> </p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Review)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Likes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.diner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.restaurant)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Likes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.diner.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.Id)
+            </td>
+            <td>
+                <a asp-action="ReviewerDetails" asp-route-id="@item.Id">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
