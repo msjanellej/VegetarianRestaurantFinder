@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VeggieRestaurantApp.Data;
 
 namespace VeggieRestaurantApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128192001_updateLikedRecipes")]
+    partial class updateLikedRecipes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "03bc84e1-2dbd-4eaa-9aaf-baef1f7f2a3a",
-                            ConcurrencyStamp = "bc13eacc-2a32-42e4-bd88-70b5da4080be",
+                            Id = "6773fdaa-e499-46d7-9a58-233d7658b9c2",
+                            ConcurrencyStamp = "494fd5b3-c76e-4aa6-bbdf-c07971c441c9",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         },
                         new
                         {
-                            Id = "cfe4c937-505a-4c2b-b3c2-5d36a3961aab",
-                            ConcurrencyStamp = "73e9bbd1-2758-4f26-8ffe-8038c96eaa46",
+                            Id = "05a67bb7-1351-406a-b588-01b3772e8e67",
+                            ConcurrencyStamp = "8b014255-8f61-4cc0-94e7-af3067f15d3b",
                             Name = "Diner",
                             NormalizedName = "DINER"
                         });
@@ -272,32 +274,6 @@ namespace VeggieRestaurantApp.Data.Migrations
                             EmailAddress = "luffy@strawhats.com",
                             Name = "Monkey D. Luffy"
                         });
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.LikedRecipes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DinerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecipeURL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DinerId");
-
-                    b.ToTable("LikedRecipes");
                 });
 
             modelBuilder.Entity("VeggieRestaurantApp.Models.Menu", b =>
@@ -700,15 +676,6 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
-                });
-
-            modelBuilder.Entity("VeggieRestaurantApp.Models.LikedRecipes", b =>
-                {
-                    b.HasOne("VeggieRestaurantApp.Models.Diner", "diner")
-                        .WithMany()
-                        .HasForeignKey("DinerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("VeggieRestaurantApp.Models.Menu", b =>

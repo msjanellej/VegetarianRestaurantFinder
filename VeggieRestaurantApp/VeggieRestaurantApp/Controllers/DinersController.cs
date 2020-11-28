@@ -122,7 +122,15 @@ namespace VeggieRestaurantApp.Controllers
 
         public IActionResult LikeRecipe(int id, Recipe recipe)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             var recipeToLike = _context.Recipes.Single(r => r.Id == recipe.Id);
+            LikedRecipe recipeToAdd = new LikedRecipe();
+            recipeToAdd.Name = recipeToLike.Name;
+            recipeToAdd.RecipeURL = recipeToLike.RecipeURL;
+            recipeToAdd.Image = recipeToLike.Image;
+            recipeToAdd.DinerId = diner.Id;
+            _context.LikedRecipes.Add(recipeToAdd);
             recipeToLike.Likes += 1;
             _context.SaveChanges();
             return View("RecipeDetails", recipeToLike);
@@ -141,10 +149,9 @@ namespace VeggieRestaurantApp.Controllers
         }
         public IActionResult ViewMyLikedRecipes()
         {
-            var recipes = _context.Recipes.ToList();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            var recipeList = recipes.Where(r => r.DinerId == diner.Id);
+            var recipeList = _context.LikedRecipes.Where(r => r.DinerId == diner.Id);
             return View(recipeList);
 
         }
@@ -183,6 +190,23 @@ namespace VeggieRestaurantApp.Controllers
         {
             var specials = _context.Menus.Where(r => r.RestaurantId == id).ToList();
             return View(specials);
+        }
+        public IActionResult CreateRecipe(int id)
+        {
+            Recipe recipe = new Recipe();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            recipe.DinerId = diner.Id;
+            return View(recipe);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateRecipe(Recipe recipe)
+        {
+           
+            _context.Add(recipe);
+            _context.SaveChanges();
+            return RedirectToAction("RecipeIndex");
         }
     }
 }
