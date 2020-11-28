@@ -10,9 +10,12 @@
 <p>
     <a asp-action="Create">Add A Recipe!</a>
 </p>
-<table class="table">
+<p>
+    <a asp-action="RestaurantIndex">Back To Restaurants</a>
+</p>
+<table class="table table-hover">
     <thead>
-        <tr>
+        <tr  class="table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>

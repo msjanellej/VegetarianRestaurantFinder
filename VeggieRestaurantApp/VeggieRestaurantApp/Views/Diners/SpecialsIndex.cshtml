@@ -10,9 +10,9 @@
     <a asp-action="RestaurantIndex">Back To Restaurants</a>
 </p>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
-        <tr>
+        <tr class="table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.restaurant)
             </th>
             <th></th>
-        </tr>
+        </trclass="table-success">
     </thead>
     <tbody>
 @foreach (var item in Model) {
