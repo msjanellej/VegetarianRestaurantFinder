@@ -5,23 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ReviewsIndex</h1>
+<h1>My Reviews</h1>
 
 <p><a asp-action="Index">Back To Account Details</a> </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
-        <tr>
+        <tr class="table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Review)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Likes)
+                @Html.DisplayNameFor(model => model.Restaurant)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.diner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.restaurant)
+                @*@Html.DisplayNameFor(model => model.restaurant)*@
+                Reviewer
             </th>
             <th></th>
         </tr>
@@ -32,17 +30,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Review)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.Likes)
+                @Html.DisplayFor(modelItem => item.restaurant.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.diner.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.restaurant.Id)
-            </td>
-            <td>
-                <a asp-action="ReviewerDetails" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="ReviewerDetails" asp-route-id="@item.Id">Reviewer Details</a> 
             </td>
         </tr>
 }

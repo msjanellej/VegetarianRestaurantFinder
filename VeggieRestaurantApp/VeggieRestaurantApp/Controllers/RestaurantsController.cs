@@ -120,7 +120,11 @@ namespace VeggieRestaurantApp.Controllers
         // GET: RestaurantsController/Create
         public ActionResult CreateSpecials()
         {
-            return View();
+            Menu menu = new Menu();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            menu.RestaurantId = restaurant.Id;
+            return View(menu);
         }
 
         // POST: RestaurantsController/Create
@@ -128,9 +132,7 @@ namespace VeggieRestaurantApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSpecials(Menu menu)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            menu.RestaurantId = restaurant.Id;
+            
             _context.Menus.Add(menu);
             _context.SaveChanges();
             return RedirectToAction("SpecialsIndex");
