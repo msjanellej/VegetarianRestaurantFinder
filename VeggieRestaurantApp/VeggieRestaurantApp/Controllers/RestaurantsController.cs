@@ -45,12 +45,14 @@ namespace VeggieRestaurantApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Restaurant restaurant)
         {
-            var coordinates = GetCoordinates(restaurant);
+            var newRestaurant = GetCoordinates(restaurant);
+            restaurant.latitude = 0;
+            restaurant.longitude = 0;
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             restaurant.IdentityUserId = userId;
             _context.Add(restaurant);
             _context.SaveChanges();
-            return View("Index");
+            return View("Index", restaurant);
         }
 
         // GET: RestaurantsController/Edit/5
@@ -129,7 +131,7 @@ namespace VeggieRestaurantApp.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             menu.RestaurantId = restaurant.Id;
-            _context.Add(menu);
+            _context.Menus.Add(menu);
             _context.SaveChanges();
             return RedirectToAction("SpecialsIndex");
         }

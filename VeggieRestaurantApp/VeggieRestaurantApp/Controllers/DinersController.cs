@@ -29,7 +29,6 @@ namespace VeggieRestaurantApp.Controllers
         public IActionResult Index()
         {
             ViewData["GOOGLE_API_KEY"] = APIKeys.GOOGLE_API_KEY;
-            //var diners = _context.Diners.ToList();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var diner = _context.Diners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
             if (diner == null)
@@ -142,7 +141,7 @@ namespace VeggieRestaurantApp.Controllers
         }
         public IActionResult LikeRestaurant(int id, Restaurant restaurant)
         {
-            var restaurantToLike = _context.Recipes.Single(r => r.Id == restaurant.Id);
+            var restaurantToLike = _context.Restaurants.Single(r => r.Id == restaurant.Id);
             restaurantToLike.Likes += 1;
             _context.SaveChanges();
             return View("RestaurantDetails", restaurantToLike);
