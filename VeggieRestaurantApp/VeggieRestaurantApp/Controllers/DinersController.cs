@@ -207,5 +207,10 @@ namespace VeggieRestaurantApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("RecipeIndex");
         }
+        public IActionResult TestMap()
+        {
+            ViewData["GOOGLE_API_KEY"] = APIKeys.GOOGLE_API_KEY;
+            return View();
+        }
     }
 }

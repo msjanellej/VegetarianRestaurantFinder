@@ -1,0 +1,59 @@
+﻿@model IEnumerable<VeggieRestaurantApp.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "TestMap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>TestMap</h1>
+
+<p>
+    <a asp-action="Index">Index</a>
+</p>
+<div class="row">
+    <div class="col-md-6">
+        <div id="map" style="height:500px; width: 500px;">
+            @*<script>
+                let googleSearchButton = document.getElementById('googleSearch');
+                googleSearchButton.addEventListener("click", () => {
+                })
+            </script>*@
+            <script>
+                function initMap() {
+
+                    var Milwaukee = { lat: 43.0579, lng: -87.8991 };
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 12,
+                        center: Milwaukee,
+                    });
+                    var locations = [
+                        ['Beerline Cafe', 43.0580491, -87.8986501],
+                        ['Beans & Barley', 43.0598985, -87.8866917],
+                        ['On The Bus', 43.036569180291508, -87.9067293197085],
+                        ['Celesta', 43.056616899999987, -87.8884757],
+                        ["Janelle's Famous Food", 42.9934727, -87.973733299999992]
+                    ]
+                    
+                    for (var i = 0; i < locations.length; i++) {
+                        var item = locations[i];
+                        var marker = new google.maps.Marker({
+                            position: { lat: item[1], lng: item[2] },
+                            map: map,
+                        });
+
+                    }
+                    marker.setMap(map);
+                }
+            </script>
+            <script defer
+                    src="https://maps.googleapis.com/maps/api/js?key=@ViewData["GOOGLE_API_KEY"]&libraries=places&callback=initMap">
+            </script>
+
+        </div>
+    </div>
+    </script>
+
+    
+
+
+

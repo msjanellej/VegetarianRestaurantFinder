@@ -77,6 +77,23 @@
                         center: { lat: 43.0579, lng: -87.8991 },
                         zoom: 13,
                     });
+                    var locations = [
+                        ['Beerline Cafe', 43.0580491, -87.8986501],
+                        ['Beans & Barley', 43.0598985, -87.8866917],
+                        ['On The Bus', 43.036569180291508, -87.9067293197085],
+                        ['Celesta', 43.056616899999987, -87.8884757],
+                        ["Janelle's Famous Food", 42.9934727, -87.973733299999992]
+                    ]
+                    for (var i = 0; i < locations.length; i++) {
+                        var item = locations[i];
+                        var restaurantMarker = new google.maps.Marker({
+                            position: { lat: item[1], lng: item[2] },
+                            title: $`item[0]`,
+                            map: map,
+                        });
+
+                    }
+                    marker.setMap(map);
                     const input = document.getElementById("googleSearch");
                     const autocomplete = new google.maps.places.Autocomplete(input);
                     autocomplete.bindTo("bounds", map);
