@@ -43,16 +43,15 @@ namespace VeggieRestaurantApp.Controllers
         // POST: RestaurantsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Restaurant restaurant)
+        public async Task<ActionResult> Create(Restaurant restaurant)
         {
-            var newRestaurant = GetCoordinates(restaurant);
-            restaurant.latitude = 0;
-            restaurant.longitude = 0;
+            Restaurant newRestaurant = await GetCoordinates(restaurant);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            restaurant.IdentityUserId = userId;
-            _context.Add(restaurant);
+            newRestaurant.IdentityUserId = userId;
+            _context.Add(newRestaurant);
             _context.SaveChanges();
-            return View("Index", restaurant);
+            //return View("Index", newRestaurant);
+            return RedirectToAction("Index", newRestaurant);
         }
 
         // GET: RestaurantsController/Edit/5
