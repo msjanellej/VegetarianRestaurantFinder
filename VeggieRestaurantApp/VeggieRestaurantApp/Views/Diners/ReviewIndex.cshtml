@@ -7,19 +7,17 @@
 
 <h1>Reviews</h1>
 
-<p>
+<h6>
     <a asp-action="RestaurantIndex">Back To Restaurants</a>
-</p>
+</h6>
 <table class="table table-hover">
     <thead>
         <tr  class="table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Review)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.diner)
-            </th>
-            <th></th>
+  
+  
         </tr>
     </thead>
     <tbody>
@@ -27,9 +25,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Review)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.diner.Id)
             </td>
         </tr>
 }

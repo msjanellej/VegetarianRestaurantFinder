@@ -11,9 +11,9 @@
     <a asp-action="CreateSpecials">Create New Special or Menu Item</a><br>
     <a asp-action="Index">Back to Account Details</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
-        <tr>
+        <tr class="table-success">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.restaurant.Id)
+                @Html.DisplayFor(modelItem => item.restaurant.Name)
             </td>
             <td>
                 <a asp-action="EditSpecials" asp-route-id="@item.Id">Edit</a> |

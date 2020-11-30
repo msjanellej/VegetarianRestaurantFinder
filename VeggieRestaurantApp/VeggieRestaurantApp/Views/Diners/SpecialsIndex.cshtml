@@ -6,9 +6,9 @@
 }
 
 <h1>Our Specials</h1>
-<p>
+<h6>
     <a asp-action="RestaurantIndex">Back To Restaurants</a>
-</p>
+</h6>
 
 <table class="table table-hover">
     <thead>
@@ -22,9 +22,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.restaurant)
-            </th>
+
             <th></th>
         </trclass="table-success">
     </thead>
@@ -40,9 +38,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.restaurant.Name)
-            </td>
+            
             
         </tr>
 }
