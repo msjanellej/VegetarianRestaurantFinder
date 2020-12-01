@@ -1,0 +1,46 @@
+﻿@model IEnumerable<VeggieRestaurantApp.Models.EmailList>
+
+@{
+    ViewData["Title"] = "EmailIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My Email List</h1>
+
+<h6>
+    <a asp-action="Index">Back To Home</a>
+</h6>
+<table class="table table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Restaurant)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Restaurant.Name)
+            </td>
+          
+        </tr>
+}
+    </tbody>
+</table>

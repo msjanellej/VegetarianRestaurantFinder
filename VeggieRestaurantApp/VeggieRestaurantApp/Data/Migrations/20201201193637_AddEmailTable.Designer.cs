@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VeggieRestaurantApp.Data;
 
 namespace VeggieRestaurantApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201201193637_AddEmailTable")]
+    partial class AddEmailTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "21d7ad11-1e25-46c1-88b7-e2041837e222",
-                            ConcurrencyStamp = "189954b2-0266-431c-b76d-19d0d3a6ec06",
+                            Id = "6190b051-2359-4b57-a816-ef911610ccb4",
+                            ConcurrencyStamp = "042f011d-2776-42f6-8fb6-2b7deba6a41b",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         },
                         new
                         {
-                            Id = "f9acf962-bc6f-46e9-a411-afe9942c37ca",
-                            ConcurrencyStamp = "172a1b2e-a98e-4782-bd4d-4bf3c3e94fa4",
+                            Id = "a9051750-94d5-4565-891b-3008dac37eb5",
+                            ConcurrencyStamp = "fb4fdae2-9854-443e-b91c-18b084c42ce2",
                             Name = "Diner",
                             NormalizedName = "DINER"
                         });
@@ -290,14 +292,9 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DinerId");
-
-                    b.HasIndex("RestaurantId");
 
                     b.ToTable("EmailLists");
                 });
@@ -732,15 +729,9 @@ namespace VeggieRestaurantApp.Data.Migrations
 
             modelBuilder.Entity("VeggieRestaurantApp.Models.EmailList", b =>
                 {
-                    b.HasOne("VeggieRestaurantApp.Models.Diner", "Diner")
+                    b.HasOne("VeggieRestaurantApp.Models.Diner", "diner")
                         .WithMany()
                         .HasForeignKey("DinerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VeggieRestaurantApp.Models.Restaurant", "Restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

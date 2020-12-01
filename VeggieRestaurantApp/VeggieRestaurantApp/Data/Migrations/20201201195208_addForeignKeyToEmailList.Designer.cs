@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VeggieRestaurantApp.Data;
 
 namespace VeggieRestaurantApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201201195208_addForeignKeyToEmailList")]
+    partial class addForeignKeyToEmailList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace VeggieRestaurantApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "21d7ad11-1e25-46c1-88b7-e2041837e222",
-                            ConcurrencyStamp = "189954b2-0266-431c-b76d-19d0d3a6ec06",
+                            Id = "305119d8-ee48-421e-b866-e1ec26a1cf5d",
+                            ConcurrencyStamp = "e5b41ce5-5a80-4798-b588-4ed5ad86497f",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         },
                         new
                         {
-                            Id = "f9acf962-bc6f-46e9-a411-afe9942c37ca",
-                            ConcurrencyStamp = "172a1b2e-a98e-4782-bd4d-4bf3c3e94fa4",
+                            Id = "cf607bef-4676-402d-b066-141e0df9ad4a",
+                            ConcurrencyStamp = "156897e0-9f85-4a71-9dee-2581f01d6910",
                             Name = "Diner",
                             NormalizedName = "DINER"
                         });
@@ -732,13 +734,13 @@ namespace VeggieRestaurantApp.Data.Migrations
 
             modelBuilder.Entity("VeggieRestaurantApp.Models.EmailList", b =>
                 {
-                    b.HasOne("VeggieRestaurantApp.Models.Diner", "Diner")
+                    b.HasOne("VeggieRestaurantApp.Models.Diner", "diner")
                         .WithMany()
                         .HasForeignKey("DinerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VeggieRestaurantApp.Models.Restaurant", "Restaurant")
+                    b.HasOne("VeggieRestaurantApp.Models.Restaurant", "restaurant")
                         .WithMany()
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)

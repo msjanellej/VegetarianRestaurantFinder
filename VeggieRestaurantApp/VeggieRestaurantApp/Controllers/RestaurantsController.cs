@@ -14,7 +14,7 @@ using VeggieRestaurantApp.Models;
 
 namespace VeggieRestaurantApp.Controllers
 {
-    [Authorize(Roles = "Restaurant")]
+    //[Authorize(Roles = "Restaurant")]
     public class RestaurantsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -184,6 +184,13 @@ namespace VeggieRestaurantApp.Controllers
             restaurant.longitude = double.Parse(longitude);
             return restaurant;
 
+        }
+        public IActionResult EmailIndex()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var restaurant = _context.Restaurants.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var emails = _context.EmailLists.Where(r => r.RestaurantId == restaurant.Id).ToList();
+            return View(emails);
         }
 
 

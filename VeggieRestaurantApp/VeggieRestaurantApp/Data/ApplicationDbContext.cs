@@ -78,6 +78,8 @@ namespace VeggieRestaurantApp.Data
         public DbSet<VeggieRestaurantApp.Models.RestaurantDinerRestaurantReviewVM> RestaurantDinerRestaurantReviewVM { get; set; }
         public DbSet<VeggieRestaurantApp.Models.LikedRecipe> LikedRecipes { get; set; }
 
+        public DbSet<VeggieRestaurantApp.Models.EmailList> EmailLists { get; set; }
+
 
     }
 }

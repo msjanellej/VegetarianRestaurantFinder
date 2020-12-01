@@ -15,7 +15,7 @@ using VeggieRestaurantApp.Models;
 
 namespace VeggieRestaurantApp.Controllers
 {
-    [Authorize(Roles = "Diner")]
+    //[Authorize(Roles = "Diner")]
     public class DinersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -208,6 +208,32 @@ namespace VeggieRestaurantApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("RecipeIndex");
         }
-        
+        public IActionResult EmailSignUp()
+        {
+            EmailList email = new EmailList();
+            //var restaurant = _context.Restaurants.Where(r => r.Id == id).SingleOrDefault();
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var diner = _context.Diners.Where(d => d.IdentityUserId == userId).SingleOrDefault();
+            //email.RestaurantId = restaurant.Id;
+            //email.DinerId = diner.Id;
+            return View(email);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EmailSignUp (int id, EmailList email)
+        {
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var diner = _context.Diners.Where(d => d.IdentityUserId == userId).SingleOrDefault();
+            var restaurant = _context.Restaurants.Where(r => r.Id == id).SingleOrDefault();
+            email.Restaurant = restaurant;
+            email.Diner = diner;
+            email.Id = 0;
+            _context.EmailLists.Add(email);
+            _context.SaveChanges();
+            return RedirectToAction("RestaurantIndex");
+        }
+
     }
 }
