@@ -15,7 +15,7 @@ using VeggieRestaurantApp.Models;
 
 namespace VeggieRestaurantApp.Controllers
 {
-    //[Authorize(Roles = "Diner")]
+    [Authorize(Roles = "Diner")]
     public class DinersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -64,7 +64,7 @@ namespace VeggieRestaurantApp.Controllers
             diner.IdentityUserId = userId;
             _context.Add(diner);
             _context.SaveChanges();
-            return View(diner);
+            return RedirectToAction("Index", diner);
         }
 
         // GET: Diners/Edit/5

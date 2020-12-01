@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ using VeggieRestaurantApp.Models;
 
 namespace VeggieRestaurantApp.Controllers
 {
-    //[Authorize(Roles = "Restaurant")]
+    [Authorize(Roles = "Restaurant")]
     public class RestaurantsController : Controller
     {
         private readonly ApplicationDbContext _context;
