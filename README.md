@@ -5,4 +5,5 @@ Technologies used:  ASP.NET Core MVC, SQL, JavaScript, LINQ, HTML/CSS
 APIS: Edamam recipe api, Google geocoding API, Google Places API
 
 ![](./VegetarianRestaurantFinder/images/veggierestaurantfindermainpage.jpg)
-![](./VegetarianRestaurantFinder/images/dinersIndex.jpg)
+![](./VegetarianRestaurantFinder/blob/main/images/dinersIndex.jpg?raw=true)
+<hr>
