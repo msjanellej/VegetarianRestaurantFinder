@@ -4,5 +4,5 @@ Asp.Net Core MVC app that allows diners to find vegan/vegetarian restaurants in 
 Technologies used:  ASP.NET Core MVC, SQL, JavaScript, LINQ, HTML/CSS
 APIS: Edamam recipe api, Google geocoding API, Google Places API
 
-![](./VegetarianRestaurantFinder/veggierestaurantfindermainpage.jpg)
-![](./VegetarianRestaurantFinder/dinersIndex.jpg)
+![](./VegetarianRestaurantFinder/images/veggierestaurantfindermainpage.jpg)
+![](./VegetarianRestaurantFinder/images/dinersIndex.jpg)
